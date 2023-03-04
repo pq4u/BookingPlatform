@@ -42,7 +42,7 @@ public class BookingService : IBookingService
             command.CustomerName, command.Email, command.Phone, new Date(command.Date));
 
         employee.AddBooking(booking);
-
+        _employeeRepository.Update(employee);
         return booking.Id;
     }
 
@@ -57,7 +57,7 @@ public class BookingService : IBookingService
             return false;
 
         employee.RemoveBooking(command.BookingId);
-
+        _employeeRepository.Update(employee);
         return true;
     }
 

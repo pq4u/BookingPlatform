@@ -7,7 +7,7 @@ public static class Extensions
 {
     public static IServiceCollection AddCore(this IServiceCollection services)
     {
-        services.AddSingleton<IEmployeeRepository, InMemoryEmployeeRepository>();
+        //services.AddSingleton<IEmployeeRepository, InMemoryEmployeeRepository>();
 
         return services;
     }

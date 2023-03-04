@@ -7,7 +7,7 @@ public static class Extensions
 {
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
-        services.AddSingleton<IBookingService, BookingService>();
+        services.AddScoped<IBookingService, BookingService>();
         return services;
     }
 }

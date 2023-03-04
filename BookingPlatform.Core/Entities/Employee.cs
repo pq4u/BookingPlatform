@@ -6,10 +6,15 @@ namespace BookingPlatform.Core.Entities;
 public class Employee
 {
     private readonly HashSet<Booking> _bookings = new();
-    public EmployeeId Id { get; }
-    public EmployeeName Name { get; }
+    public EmployeeId Id { get; private set; }
+    public EmployeeName Name { get; private set; }
     public IEnumerable<Booking> Bookings => _bookings;
 
+    protected Employee()
+    {
+        
+    }
+    
     public Employee(EmployeeId id, EmployeeName name)
     {
         Id = id;
