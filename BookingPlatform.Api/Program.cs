@@ -7,7 +7,7 @@ builder.Services
     .AddCore()
     .AddApplication()
     .AddCore()
-    .AddInfrastructure()
+    .AddInfrastructure(builder.Configuration)
     .AddControllers();
 
 builder.Services.AddSwaggerGen();
