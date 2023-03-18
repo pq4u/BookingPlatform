@@ -5,9 +5,9 @@ namespace BookingPlatform.Core.Repositories;
 
 public interface IEmployeeRepository
 {
-    Employee Get(EmployeeId id);
-    IEnumerable<Employee> GetAll();
-    void Add(Employee employee);
-    void Update(Employee employee);
-    void Delete(Employee employee);
+    Task<Employee> GetAsync(EmployeeId id);
+    Task<IEnumerable<Employee>> GetAllAsync();
+    Task AddAsync(Employee employee);
+    Task UpdateAsync(Employee employee);
+    Task DeleteAsync(Employee employee);
 }

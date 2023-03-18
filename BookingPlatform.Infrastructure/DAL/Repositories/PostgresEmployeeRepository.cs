@@ -14,31 +14,36 @@ public class PostgresEmployeeRepository : IEmployeeRepository
         _dbContext = dbContext;
     }
 
-    public Employee Get(EmployeeId id) =>
+    public Task<Employee> GetAsync(EmployeeId id) =>
         _dbContext.Employees
             .Include(x => x.Bookings)
-            .SingleOrDefault(x => x.Id == id);
+            .SingleOrDefaultAsync(x => x.Id == id);
 
-    public IEnumerable<Employee> GetAll() =>
-        _dbContext.Employees
-            .Include(x => x.Bookings)
-            .ToList();
-
-    public void Add(Employee employee)
+    public async Task<IEnumerable<Employee>> GetAllAsync()
     {
-        _dbContext.Add(employee);
-        _dbContext.SaveChanges();
+        var results = await _dbContext.Employees
+            .Include(x => x.Bookings)
+            .ToListAsync();
+
+        return results.AsEnumerable();
+    }
+        
+
+    public async Task AddAsync(Employee employee)
+    {
+       await _dbContext.AddAsync(employee);
+       await _dbContext.SaveChangesAsync();
     }
 
-    public void Update(Employee employee)
+    public async Task UpdateAsync(Employee employee)
     {
         _dbContext.Update(employee);
-        _dbContext.SaveChanges();
+        await _dbContext.SaveChangesAsync();
     }
 
-    public void Delete(Employee employee)
+    public async Task DeleteAsync(Employee employee)
     {
         _dbContext.Remove(employee);
-        _dbContext.SaveChanges();
+        await _dbContext.SaveChangesAsync();
     }
 }

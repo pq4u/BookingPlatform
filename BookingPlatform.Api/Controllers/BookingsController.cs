@@ -17,12 +17,13 @@ public class BookingsController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<IEnumerable<BookingDto>> Get() => Ok(_bookingsService.GetAll());
+    public async Task<ActionResult<IEnumerable<BookingDto>>> Get()
+        => Ok(_bookingsService.GetAllAsync());
 
     [HttpGet("{id:guid}")]
-    public ActionResult<BookingDto> Get(Guid id)
+    public async Task<ActionResult<BookingDto>> Get(Guid id)
     {
-        var booking = _bookingsService.Get(id);
+        var booking = await _bookingsService.GetAsync(id);
         if (booking is null)
             return NotFound();
 
@@ -30,9 +31,9 @@ public class BookingsController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult Post(CreateBooking command)
+    public async Task<ActionResult> Post(CreateBooking command)
     {
-        var id = _bookingsService.Create(command with {BookingId = Guid.NewGuid()});
+        var id = await _bookingsService.CreateAsync(command with {BookingId = Guid.NewGuid()});
         if (id is null)
             return BadRequest();
 
@@ -40,9 +41,9 @@ public class BookingsController : ControllerBase
     }
 
     [HttpDelete("{id:guid}")]
-    public ActionResult Delete(Guid id)
+    public async Task<ActionResult> DeleteAsync(Guid id)
     {
-        if (_bookingsService.Delete(new DeleteBooking(id)))
+        if (await _bookingsService.DeleteAsync(new DeleteBooking(id)))
             return NoContent();
 
         return NoContent();

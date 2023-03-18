@@ -5,8 +5,8 @@ namespace BookingPlatform.Application.Services;
 
 public interface IBookingService
 {
-    BookingDto Get(Guid id);
-    IEnumerable<BookingDto> GetAll();
-    Guid? Create(CreateBooking command);
-    bool Delete(DeleteBooking command);
+    Task<BookingDto> GetAsync(Guid id);
+    Task<IEnumerable<BookingDto>> GetAllAsync();
+    Task<Guid?> CreateAsync(CreateBooking command);
+    Task<bool> DeleteAsync(DeleteBooking command);
 }

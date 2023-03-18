@@ -15,11 +15,18 @@ public class BookingService : IBookingService
         _employeeRepository = employeeRepository;
     }
 
-    public BookingDto Get(Guid id)
-        => GetAll().SingleOrDefault(x => x.Id == id);
+    public async Task<BookingDto> GetAsync(Guid id)
+    {
+        var employees = await GetAllAsync();
+        return employees.SingleOrDefault(x => x.Id == id);
+    }
 
-    public IEnumerable<BookingDto> GetAll()
-        => _employeeRepository.GetAll().SelectMany(x => x.Bookings)
+    public async Task<IEnumerable<BookingDto>> GetAllAsync()
+    {
+        var employees = await _employeeRepository.GetAllAsync();
+        
+        return employees
+            .SelectMany(x => x.Bookings)
             .Select(x => new BookingDto()
             {
                 Id = x.Id,
@@ -29,12 +36,14 @@ public class BookingService : IBookingService
                 Phone = x.Phone,
                 Date = x.Date.Value.Date
             });
+    }
+    
 
-    public Guid? Create(CreateBooking command)
+    public async Task<Guid?> CreateAsync(CreateBooking command)
     {
         //var employee = _employeeRepository.GetAll().SingleOrDefault(x => x.Id == command.EmployeeId);
         var employeeId = new EmployeeId(command.EmployeeId);
-        var employee = _employeeRepository.Get(employeeId);
+        var employee = await _employeeRepository.GetAsync(employeeId);
         if (employee is null)
             return default;
 
@@ -42,13 +51,13 @@ public class BookingService : IBookingService
             command.CustomerName, command.Email, command.Phone, new Date(command.Date));
 
         employee.AddBooking(booking);
-        _employeeRepository.Update(employee);
+        await _employeeRepository.UpdateAsync(employee);
         return booking.Id;
     }
 
-    public bool Delete(DeleteBooking command)
+    public async Task<bool> DeleteAsync(DeleteBooking command)
     {
-        var employee = GetEmployeeByBooking(command.BookingId);
+        var employee = await GetEmployeeByBookingAsync(command.BookingId);
         if (employee is null)
             return false;
 
@@ -57,10 +66,13 @@ public class BookingService : IBookingService
             return false;
 
         employee.RemoveBooking(command.BookingId);
-        _employeeRepository.Update(employee);
+        _employeeRepository.UpdateAsync(employee);
         return true;
     }
 
-    private Employee GetEmployeeByBooking(BookingId bookingId)
-        => _employeeRepository.GetAll().SingleOrDefault(x => x.Bookings.Any(b => b.Id == bookingId));
+    private async Task<Employee> GetEmployeeByBookingAsync(BookingId bookingId)
+    {
+        var employees = await _employeeRepository.GetAllAsync();
+        return employees.SingleOrDefault(x => x.Bookings.Any(r => r.Id == bookingId));
+    }
 }
