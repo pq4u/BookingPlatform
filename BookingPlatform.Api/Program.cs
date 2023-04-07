@@ -13,7 +13,7 @@ builder.Services
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
-app.MapControllers();
+app.UseInfrastructure();
 app.UseSwagger();
 app.UseSwaggerUI();
 app.Run();
