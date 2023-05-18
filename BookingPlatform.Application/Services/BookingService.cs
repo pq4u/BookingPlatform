@@ -1,5 +1,6 @@
 ﻿using BookingPlatform.Application.Commands;
 using BookingPlatform.Application.DTO;
+using BookingPlatform.Core.DomainServices;
 using BookingPlatform.Core.Entities;
 using BookingPlatform.Core.Repositories;
 using BookingPlatform.Core.ValueObjects;
@@ -9,10 +10,12 @@ namespace BookingPlatform.Application.Services;
 public class BookingService : IBookingService
 {
     private readonly IEmployeeRepository _employeeRepository;
+    private readonly IBookingDomainService _bookingDomainService;
 
-    public BookingService(IEmployeeRepository employeeRepository)
+    public BookingService(IEmployeeRepository employeeRepository, IBookingDomainService bookingDomainService)
     {
         _employeeRepository = employeeRepository;
+        _bookingDomainService = bookingDomainService;
     }
 
     public async Task<BookingDto> GetAsync(Guid id)
@@ -43,14 +46,16 @@ public class BookingService : IBookingService
     {
         //var employee = _employeeRepository.GetAll().SingleOrDefault(x => x.Id == command.EmployeeId);
         var employeeId = new EmployeeId(command.EmployeeId);
-        var employee = await _employeeRepository.GetAsync(employeeId);
+        var employees = (await _employeeRepository.GetAllAsync()).ToList();
+        var employee = employees.SingleOrDefault(x => x.Id == employeeId);
         if (employee is null)
             return default;
 
         var booking = new Booking(command.BookingId, command.EmployeeId,
             command.CustomerName, command.Email, command.Phone, new Date(command.Date));
 
-        employee.AddBooking(booking);
+        //employee.AddBooking(booking);
+        _bookingDomainService.BookForCustomer(employees, JobTitle.Customer, employee, booking);
         await _employeeRepository.UpdateAsync(employee);
         return booking.Id;
     }
