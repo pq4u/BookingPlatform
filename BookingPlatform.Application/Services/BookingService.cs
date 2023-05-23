@@ -6,7 +6,7 @@ using BookingPlatform.Core.Repositories;
 using BookingPlatform.Core.ValueObjects;
 
 namespace BookingPlatform.Application.Services;
-
+/*
 public class BookingService : IBookingService
 {
     private readonly IEmployeeRepository _employeeRepository;
@@ -80,4 +80,4 @@ public class BookingService : IBookingService
         var employees = await _employeeRepository.GetAllAsync();
         return employees.SingleOrDefault(x => x.Bookings.Any(r => r.Id == bookingId));
     }
-}
+}*/

@@ -5,11 +5,11 @@ using BookingPlatform.Core.ValueObjects;
 
 namespace BookingPlatform.Core.DomainServices;
 
-public class BookingDomainService : IBookingDomainService
+public class BookingService : IBookingService
 {
     private readonly IEnumerable<IBookingPolicy> _policies;
 
-    public BookingDomainService(IEnumerable<IBookingPolicy> policies)
+    public BookingService(IEnumerable<IBookingPolicy> policies)
     {
         _policies = policies;
     }

@@ -12,7 +12,7 @@ public static class Extensions
         services.AddSingleton<IBookingPolicy, BossBookingPolicy>();
         services.AddSingleton<IBookingPolicy, CustomerBookingPolicy>();
 
-        services.AddSingleton<IBookingDomainService, BookingDomainService>();
+        services.AddSingleton<IBookingService, BookingService>();
         return services;
     }
 }

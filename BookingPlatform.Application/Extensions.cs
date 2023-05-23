@@ -1,4 +1,4 @@
-﻿using BookingPlatform.Application.Services;
+﻿using BookingPlatform.Application.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BookingPlatform.Application;
@@ -7,7 +7,13 @@ public static class Extensions
 {
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
-        services.AddScoped<IBookingService, BookingService>();
+        var applicationAssembly = typeof(ICommandHandler<>).Assembly;
+
+        services.Scan(s => s.FromAssemblies(applicationAssembly)
+            .AddClasses(c => c.AssignableTo(typeof(ICommandHandler<>)))
+            .AsImplementedInterfaces()
+            .WithScopedLifetime());
+
         return services;
     }
 }

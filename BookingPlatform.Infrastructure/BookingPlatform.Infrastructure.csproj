@@ -24,9 +24,11 @@
       <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" />
       <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="7.0.0" />
       <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.3" />
+      <PackageReference Include="Scrutor" Version="4.2.2" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\BookingPlatform.Application\BookingPlatform.Application.csproj" />
       <ProjectReference Include="..\BookingPlatform.Core\BookingPlatform.Core.csproj" />
     </ItemGroup>
 
