@@ -14,8 +14,8 @@ public class PostgresEmployeeRepository : IEmployeeRepository
         _dbContext = dbContext;
     }
 
-    public Task<Employee> GetAsync(EmployeeId id) =>
-        _dbContext.Employees
+    public async Task<Employee> GetAsync(EmployeeId id) =>
+        await _dbContext.Employees
             .Include(x => x.Bookings)
             .SingleOrDefaultAsync(x => x.Id == id);
 

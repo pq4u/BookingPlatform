@@ -1,6 +1,7 @@
 using BookingPlatform.Application;
 using BookingPlatform.Core;
 using BookingPlatform.Infrastructure;
+using BookingPlatform.Infrastructure.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services
@@ -10,6 +11,7 @@ builder.Services
     .AddInfrastructure(builder.Configuration)
     .AddControllers();
 
+builder.UseSerilog();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();

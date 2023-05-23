@@ -1,6 +1,7 @@
 ﻿using BookingPlatform.Application.Abstractions;
 using BookingPlatform.Infrastructure.DAL;
 using BookingPlatform.Infrastructure.Exceptions;
+using BookingPlatform.Infrastructure.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,6 +24,8 @@ public static class Extensions
             .AddClasses(c => c.AssignableTo(typeof(IQueryHandler<,>)))
             .AsImplementedInterfaces()
             .WithScopedLifetime());
+
+        services.AddCustomLogging();
 
         return services;
     }

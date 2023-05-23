@@ -25,4 +25,7 @@ public class Booking
         Phone = phone;
         Date = date;
     }
+
+    public void ChangeDate(Date date)
+        => Date = date;
 }
