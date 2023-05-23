@@ -32,18 +32,15 @@ public class PostgresEmployeeRepository : IEmployeeRepository
     public async Task AddAsync(Employee employee)
     {
        await _dbContext.AddAsync(employee);
-       await _dbContext.SaveChangesAsync();
     }
 
     public async Task UpdateAsync(Employee employee)
     {
         _dbContext.Update(employee);
-        await _dbContext.SaveChangesAsync();
     }
 
     public async Task DeleteAsync(Employee employee)
     {
         _dbContext.Remove(employee);
-        await _dbContext.SaveChangesAsync();
     }
 }
