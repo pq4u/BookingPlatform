@@ -3,7 +3,7 @@ using BookingPlatform.Application.Abstractions;
 using Humanizer;
 using Microsoft.Extensions.Logging;
 
-namespace BookingPlatform.Infrastructure.DAL.Decorators;
+namespace BookingPlatform.Infrastructure.Logging.Decorators;
 
 internal sealed class LoggingCommandHandlerDecorator<TCommand> :
     ICommandHandler<TCommand> where TCommand : class, ICommand

@@ -2,6 +2,7 @@
 using BookingPlatform.Infrastructure.DAL;
 using BookingPlatform.Infrastructure.Exceptions;
 using BookingPlatform.Infrastructure.Logging;
+using BookingPlatform.Infrastructure.Security;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,9 +15,12 @@ public static class Extensions
     {
         var section = configuration.GetSection("app");
         services.Configure<AppOptions>(section);
-        
+        services.AddControllers();
         services.AddSingleton<ExceptionMiddleware>();
+        services.AddSecurity();
+        services.AddCustomLogging();
         services.AddPostgres(configuration);
+
         
         var infrastructureAssembly = typeof(AppOptions).Assembly;
 
@@ -24,8 +28,6 @@ public static class Extensions
             .AddClasses(c => c.AssignableTo(typeof(IQueryHandler<,>)))
             .AsImplementedInterfaces()
             .WithScopedLifetime());
-
-        services.AddCustomLogging();
 
         return services;
     }

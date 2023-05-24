@@ -8,8 +8,7 @@ builder.Services
     .AddCore()
     .AddApplication()
     .AddCore()
-    .AddInfrastructure(builder.Configuration)
-    .AddControllers();
+    .AddInfrastructure(builder.Configuration);
 
 builder.UseSerilog();
 builder.Services.AddSwaggerGen();

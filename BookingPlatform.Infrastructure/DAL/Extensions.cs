@@ -21,9 +21,12 @@ public static class Extensions
         services.AddDbContext<ApplicationDbContext>(x => x.UseNpgsql(options.ConnectionString));
         
         services.AddScoped<IEmployeeRepository, PostgresEmployeeRepository>();
+        services.AddScoped<IUserRepository, PostgresUserRepository>();
         services.AddScoped<IUnitOfWork, PostgresUnitOfWork>();
         
-        //services.AddHostedService<DatabaseInitializer>();
+        services.TryDecorate(typeof(ICommandHandler<>), typeof(UnitOfWorkCommandHandlerDecorator<>));
+        
+        services.AddHostedService<DatabaseInitializer>();
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
         return services;

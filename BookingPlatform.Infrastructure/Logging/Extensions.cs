@@ -1,5 +1,6 @@
 ﻿using BookingPlatform.Application.Abstractions;
 using BookingPlatform.Infrastructure.DAL.Decorators;
+using BookingPlatform.Infrastructure.Logging.Decorators;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
@@ -10,7 +11,7 @@ public static class Extensions
 {
     internal static IServiceCollection AddCustomLogging(this IServiceCollection services)
     {
-        services.TryDecorate(typeof(ICommandHandler<>), typeof(UnitOfWorkCommandHandlerDecorator<>));
+        services.TryDecorate(typeof(ICommandHandler<>), typeof(LoggingCommandHandlerDecorator<>));
 
         return services;
     }
