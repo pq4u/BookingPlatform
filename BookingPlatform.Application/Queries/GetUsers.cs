@@ -5,5 +5,4 @@ namespace BookingPlatform.Application.Queries;
 
 public class GetUsers : IQuery<IEnumerable<UserDto>>
 {
-    
 }
