@@ -6,7 +6,7 @@ public sealed record Date
 
     public Date(DateTimeOffset value)
     {
-        Value = value.Date;
+        Value = value.DateTime;
     }
     
     public Date AddDays(int days) => new(Value.AddDays(days));
@@ -31,5 +31,5 @@ public sealed record Date
 
     public static Date Now => new(DateTimeOffset.Now);
 
-    public override string ToString() => Value.ToString("d");
+    public override string ToString() => Value.ToString("g");
 }
