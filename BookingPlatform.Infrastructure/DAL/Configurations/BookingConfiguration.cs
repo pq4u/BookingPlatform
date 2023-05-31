@@ -14,6 +14,10 @@ public class BookingConfiguration : IEntityTypeConfiguration<Booking>
             .HasConversion(x => x.Value, x => new BookingId(x));
         builder.Property(x => x.EmployeeId)
             .HasConversion(x => x.Value, x => new EmployeeId(x));
+        builder.HasOne<User>().WithMany().HasForeignKey(x => x.UserId);
+        builder.Property(x => x.UserId)
+            .IsRequired()
+            .HasConversion(x => x.Value, x => new UserId(x));
         builder.Property(x => x.CustomerName)
             .HasConversion(x => x.Value, x => new CustomerName(x));
         builder.Property(x => x.Email)

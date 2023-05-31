@@ -3,7 +3,7 @@ using BookingPlatform.Application.Commands;
 using BookingPlatform.Application.DTO;
 using BookingPlatform.Application.Queries;
 using BookingPlatform.Core.DomainServices;
-using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookingPlatform.Api.Controllers;
@@ -29,13 +29,16 @@ public class BookingsController : ControllerBase
     public async Task<ActionResult<IEnumerable<EmployeeDto>>> Get([FromQuery] GetEmployees query)
         => Ok(await _getEmployeesHandler.HandleAsync(query));
 
-    [HttpPost("employeeId:guid/bookings/")]
+    
+    [Authorize]
+    [HttpPost("{employeeId:guid}/bookings/")]
     public async Task<ActionResult> Post(Guid employeeId, CreateBookingForCustomer command)
     {
         await _createBookingForCustomerHandler.HandleAsync(command with
         {
             BookingId = Guid.NewGuid(),
-            EmployeeId = employeeId
+            EmployeeId = employeeId,
+            UserId = Guid.Parse(User.Identity.Name)
         });
         return NoContent();
     }
@@ -54,37 +57,4 @@ public class BookingsController : ControllerBase
         
         return NoContent();
     }
-/*
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<BookingDto>>> Get()
-        => Ok(await _bookingsService.GetAllAsync());
-
-    [HttpGet("{id:guid}")]
-    public async Task<ActionResult<BookingDto>> Get(Guid id)
-    {
-        var booking = await _bookingsService.GetAsync(id);
-        if (booking is null)
-            return NotFound();
-
-        return Ok(booking);
-    }
-
-    [HttpPost]
-    public async Task<ActionResult> Post(CreateBooking command)
-    {
-        var id = await _bookingsService.CreateAsync(command with {BookingId = Guid.NewGuid()});
-        if (id is null)
-            return BadRequest();
-
-        return CreatedAtAction(nameof(Get), new { id }, null);
-    }
-
-    [HttpDelete("{id:guid}")]
-    public async Task<ActionResult> DeleteAsync(Guid id)
-    {
-        if (await _bookingsService.DeleteAsync(new DeleteBooking(id)))
-            return NoContent();
-
-        return NoContent();
-    }*/
 }
