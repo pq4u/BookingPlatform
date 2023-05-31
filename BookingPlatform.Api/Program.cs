@@ -15,6 +15,4 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 app.UseInfrastructure();
-app.UseSwagger();
-app.UseSwaggerUI();
 app.Run();
