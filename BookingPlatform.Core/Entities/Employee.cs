@@ -20,7 +20,10 @@ public class Employee
         Id = id;
         Name = name;
     }
-
+    
+    public static Employee Create(EmployeeId id, EmployeeName name)
+        => new(id, name);
+    
     public void AddBooking(Booking booking)
     {
         var isInvalidDate = booking.Date.Value < DateTime.UtcNow;
