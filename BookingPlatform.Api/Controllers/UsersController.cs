@@ -3,6 +3,7 @@ using BookingPlatform.Application.Commands;
 using BookingPlatform.Application.DTO;
 using BookingPlatform.Application.Queries;
 using BookingPlatform.Application.Security;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookingPlatform.Api.Controllers;
@@ -30,6 +31,7 @@ public class UsersController : ControllerBase
         _tokenStorage = tokenStorage;
     }
 
+    [Authorize(Policy = "is-admin")]
     [HttpGet("{userId:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -42,6 +44,7 @@ public class UsersController : ControllerBase
         return user;
     }
     
+    [Authorize]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [HttpGet("me")]
@@ -56,6 +59,8 @@ public class UsersController : ControllerBase
         return user;
     }
 
+    
+    [Authorize(Policy = "is-admin")]
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
