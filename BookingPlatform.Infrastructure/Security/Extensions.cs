@@ -1,6 +1,5 @@
 ﻿using BookingPlatform.Application.Security;
 using BookingPlatform.Core.Entities;
-using BookingPlatform.Core.ValueObjects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 

@@ -1,6 +1,5 @@
 ﻿using System.Text;
 using BookingPlatform.Application.Security;
-using BookingPlatform.Infrastructure.DAL;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

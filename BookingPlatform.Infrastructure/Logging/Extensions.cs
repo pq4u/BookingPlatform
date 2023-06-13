@@ -1,5 +1,4 @@
 ﻿using BookingPlatform.Application.Abstractions;
-using BookingPlatform.Infrastructure.DAL.Decorators;
 using BookingPlatform.Infrastructure.Logging.Decorators;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;

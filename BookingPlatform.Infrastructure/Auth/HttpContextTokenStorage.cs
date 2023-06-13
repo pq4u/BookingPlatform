@@ -1,7 +1,6 @@
 ﻿using BookingPlatform.Application.DTO;
 using BookingPlatform.Application.Security;
 using Microsoft.AspNetCore.Http;
-using Microsoft.IdentityModel.Tokens;
 
 namespace BookingPlatform.Infrastructure.Auth;
 
